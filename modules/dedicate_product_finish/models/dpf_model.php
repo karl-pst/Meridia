@@ -9,17 +9,19 @@ class Dpf_model extends CI_Model{
 	}
 
 	function do_save_finish($data){
-		//print_r($data['finish_type_id']);
-		//echo $data['type_counts'];
-		//var obj = new Object();
-		
-		//$types = array(array('id' =>'','sku' => $sku,'finish_id_fk' => "2"), array('id' =>'','sku' => $sku,'finish_id_fk' => "1"));		
+
+		$types = array();
 
 		foreach ($data['finish_id'] as $key) {
-			echo $key;
+
+			$types[] = array(
+							'id' => '', 
+							'sku' => $data['sku'],
+							'finish_id_fk' => $key['finish']
+							);			
 		}
 		
-		//$this->db->insert_batch('product_finish', $types);
+		$this->db->insert_batch('product_finish', $types);
 	}
 
 

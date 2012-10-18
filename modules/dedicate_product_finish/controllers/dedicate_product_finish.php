@@ -18,7 +18,7 @@ class Dedicate_product_finish extends MX_Controller{
 		
 		$this->dpf_model->do_save_finish($data);
 			
-
+		$this->index();
 	}
 
 

@@ -3,9 +3,9 @@ $this->load->view("themes/header");
 ?>
 	<body>
 		<div class="row-fluid">
-			<div class="well">
+			<div class="well	">
 			<?php
-				$attributes = array('class'=>'form-horizontal', 'onsubmit'=>'insert_type_counts();');
+				$attributes = array('class'=>'form-horizontal', 'onsubmit'=>'insert_finish_counts();');
 				echo form_open_multipart('dedicate_product_finish/save_finish', $attributes);						
 			?>
 					<fieldset>
@@ -28,7 +28,7 @@ $this->load->view("themes/header");
 											echo "<option value='".$value['id']."'>".$value['name']."</option>";
 										}
 									?>
-								</select> <input name="default" type="radio">		
+								</select><a href="javascript:;" onclick="remove_finish_row(this)" id="remover_button" class="btn btn-danger"><i class="icon-white icon-trash"></i></a> <input name="default" type="radio">		
 							</div>					
 							
 						</div> 
@@ -49,17 +49,40 @@ $this->load->view("themes/header");
 				var counter = 0;
 
 				//manipulate the add more types			
-				$(document).ready(function(){					
+				$(function(){
+
+					var max_finish = $("#finish option").length;
+
+					//trigger click cloner_button to add new finish row
 					$("#cloner_button").click(function(e){
-						e.preventDefault;
-						$("div#select_finish_clone:eq("+counter+")").clone().insertAfter("div#select_finish_clone:eq("+counter+")");
-						counter++;						
-					});
-					
+						if(counter<max_finish-1){												
+							e.preventDefault;
+							$("div#select_finish_clone:eq("+counter+")").clone().insertAfter("div#select_finish_clone:eq("+counter+")");
+							counter++;				
+						}else{
+
+							//do nothing, nothing to add anyway
+
+						}		
+					});	
 				});
 
+
+				// trigger click remover_button to remove current finish row
+				function remove_finish_row(e){
+						if(counter>0){
+							$(e).parents("div.control-group").remove();
+							counter--;
+						}else{	
+
+							//do nothing, only one row left.. should not be removed
+
+						}
+					}
+
+
 				//insert number of types added to hidden form
-				function insert_type_counts(){
+				function insert_finish_counts(){
 						$("#type_counts").val(counter+1);
 					}
 							
